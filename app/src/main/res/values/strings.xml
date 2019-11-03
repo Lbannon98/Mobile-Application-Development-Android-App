@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MealPlanner</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_favourites">Favourites</string>
+    <string name="nav_meal_plan">Meal Planner</string>
+    <string name="search_placeholder">Search Ingredients!</string>
+</resources>
