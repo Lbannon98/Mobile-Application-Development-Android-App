@@ -28,11 +28,11 @@ public class FavouritesActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch(menuItem.getItemId()) {
-                    case R.id.nav_favourites:
+                    case R.id.nav_search:
 
-                        Intent favouritesIntent = new Intent(FavouritesActivity.this, SearchActivity.class);
-                        favouritesIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(favouritesIntent);
+                        Intent searchIntent = new Intent(FavouritesActivity.this, SearchActivity.class);
+                        searchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(searchIntent);
 
                         break;
 
