@@ -4,26 +4,41 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ArrayAdapter adapter;
     ListView listView;
-    TextView emptyView;
+//    TextView emptyView;
+
+    public static final String API_KEY = "1";
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<Meal> meals = new ArrayList<>();
+    private Adapter adapt;
+    private String TAG = SearchActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +48,25 @@ public class SearchActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.searchToolbar);
         setSupportActionBar(toolbar);
 
-        listView = (ListView) findViewById(R.id.list);
-        emptyView = (TextView) findViewById(R.id.emptyView);
+//        listView = (ListView) findViewById(R.id.list);
+//        emptyView = (TextView) findViewById(R.id.emptyView);
 
         setSupportActionBar(toolbar);
 
-        adapter = new ArrayAdapter(SearchActivity.this,
-                android.R.layout.simple_list_item_1,
-                getResources().getStringArray(R.array.months));
+//        adapter = new ArrayAdapter(SearchActivity.this,
+//                android.R.layout.simple_list_item_1,
+//                getResources().getStringArray(R.array.months));
 
-        listView.setAdapter(adapter);
+//        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView adapterView, View view, int i, long l) {
-                Toast.makeText(SearchActivity.this, adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView adapterView, View view, int i, long l) {
+//                Toast.makeText(SearchActivity.this, adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-        listView.setEmptyView(emptyView);
+//        listView.setEmptyView(emptyView);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
 
@@ -83,6 +98,13 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        recyclerView = findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(SearchActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setNestedScrollingEnabled(false);
+
+        LoadJSON();
     }
 
     @Override
@@ -104,31 +126,39 @@ public class SearchActivity extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
     }
-//
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.search_bar_menu, menu);
-//
-//        MenuItem searchMenu = menu.findItem(R.id.action_search);
-//
-//        SearchView searchView = (SearchView) searchMenu.getActionView();
-//        searchView.setQueryHint("Search");
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                adapter.getFilter().filter(newText);
-//                return true;
-//            }
-//        });
-//
-//        super.onCreateOptionsMenu(menu);
-//        return true;
-//
-//    }
+
+    public void LoadJSON() {
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+        Call<MealData> call;
+        call = apiInterface.getMeal(API_KEY);
+
+        call.enqueue(new Callback<MealData>() {
+            @Override
+            public void onResponse(Call<MealData> call, Response<MealData> response) {
+                if(response.isSuccessful() && response.body().getMeal() != null) {
+
+                    if(!meals.isEmpty()) {
+                        meals.clear();
+                    }
+
+                    meals = response.body().getMeal();
+//                    Log.println();
+                    System.out.println(meals);
+                    adapt = new Adapter(meals, SearchActivity.this);
+                    recyclerView.setAdapter(adapt);
+                    adapt.notifyDataSetChanged();
+
+                } else {
+                    Toast.makeText(SearchActivity.this, "No Result!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealData> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

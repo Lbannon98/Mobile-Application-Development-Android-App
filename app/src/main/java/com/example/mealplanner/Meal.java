@@ -3,7 +3,7 @@ package com.example.mealplanner;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Meal {
+public class Meal {
 
     @SerializedName("strMeal")
     @Expose

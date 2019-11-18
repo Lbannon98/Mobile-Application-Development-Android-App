@@ -8,9 +8,7 @@ public interface ApiInterface {
 
     @GET("filter.php")
     Call<MealData> getMeal(
-
-            @Query("i") String ingredient;
+            @Query("i") String ingredient
     );
-
 
 }
