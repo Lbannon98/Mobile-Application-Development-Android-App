@@ -2,7 +2,6 @@ package com.example.mealplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -107,26 +105,6 @@ public class SearchActivity extends AppCompatActivity {
         LoadJSON();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_bar_menu, menu);
-        MenuItem mSearch = menu.findItem(R.id.action_search);
-        SearchView mSearchView = (SearchView) mSearch.getActionView();
-        mSearchView.setQueryHint("Search");
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
-
     public void LoadJSON() {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -143,7 +121,6 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     meals = response.body().getMeal();
-//                    Log.println();
                     System.out.println(meals);
                     adapt = new Adapter(meals, SearchActivity.this);
                     recyclerView.setAdapter(adapt);
@@ -156,9 +133,31 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MealData> call, Throwable t) {
-
+                System.out.println("CAUSE:" +t.getCause());
+                System.out.println("ERROR:" +t.getMessage());
             }
         });
     }
+
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.search_bar_menu, menu);
+//        MenuItem mSearch = menu.findItem(R.id.action_search);
+//        SearchView mSearchView = (SearchView) mSearch.getActionView();
+//        mSearchView.setQueryHint("Search");
+//        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+////                adapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 }
