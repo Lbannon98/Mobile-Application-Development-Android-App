@@ -10,36 +10,11 @@
     <include
         layout="@layout/search_toolbar"/>
 
-    <androidx.core.widget.NestedScrollView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"/>
-
-    </androidx.core.widget.NestedScrollView>
-
-<!--        <TextView-->
-<!--            android:id="@+id/emptyView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:text="No Results"-->
-<!--            android:textSize="20sp"-->
-<!--            android:visibility="gone"/>-->
-
-
-
-
-<!--    <ListView-->
-<!--        android:id="@+id/list"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/toolbar" />-->
-
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchToolbar"
+        android:id="@+id/listview"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

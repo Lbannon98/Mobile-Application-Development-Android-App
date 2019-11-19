@@ -1,118 +1,59 @@
 package com.example.mealplanner;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
+public class Adapter extends ArrayAdapter<String> {
 
-import java.util.List;
+    String[] meal_names;
+    int[] meal_images;
+    Context myContext;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
+    public Adapter(@NonNull Context context, String[] search_result_title, int[] search_result_images) {
+        super(context, R.layout.search_result_item);
+        this.meal_names = search_result_title;
+        this.meal_images = search_result_images;
+        this.myContext = context;
+    }
 
-    private List<Meal> meals;
-    private Context context;
-    private OnItemClickListener onItemClickListener;
-
-
-    public Adapter(List<Meal> meals, Context context) {
-        this.meals = meals;
-        this.context = context;
+    @Override
+    public int getCount() {
+        return meal_names.length;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.search_result_item, parent, false);
-        return new MyViewHolder(view, onItemClickListener);
-    }
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder myViewHolder = new ViewHolder();
 
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holders, int position) {
-        final MyViewHolder holder = holders;
-        Meal model = meals.get(position);
+        if(convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) myContext.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.search_result_item, parent, false);
+            myViewHolder.meals = (ImageView) convertView.findViewById(R.id.card_view_images);
+            myViewHolder.titles = (TextView) convertView.findViewById(R.id.meal_name);
+            convertView.setTag(myViewHolder);
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(Utils.getRandomDrawbleColor());
-        requestOptions.error(Utils.getRandomDrawbleColor());
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
-        requestOptions.centerCrop();
-        requestOptions.timeout(3000);
-
-        Glide.with(context)
-                .load(model.getStrMealThumb())
-                .apply(requestOptions)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        holder.progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        holder.progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
-                })
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.imageView);
-
-        holder.meal_name.setText(model.getStrMeal());
-     }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        TextView meal_name;
-        ImageView imageView;
-        ProgressBar progressBar;
-        OnItemClickListener onItemClickListener;
-
-        public MyViewHolder(View itemView, OnItemClickListener onItemClickListener) {
-            super(itemView);
-
-            itemView.setOnClickListener(this);
-            meal_name = itemView.findViewById(R.id.meal_name);
-            imageView = itemView.findViewById(R.id.img);
-            progressBar = itemView.findViewById(R.id.progress_load_photo);
-
-            this.onItemClickListener = onItemClickListener;
-
+        } else {
+            myViewHolder = (ViewHolder) convertView.getTag();
         }
 
-        @Override
-        public void onClick(View v) {
-            onItemClickListener.onItemClick(v, getAdapterPosition());
-        }
+        myViewHolder.meals.setImageResource(meal_images[position]);
+        myViewHolder.titles.setText(meal_names[position]);
+
+        return convertView;
+    }
+
+    static class ViewHolder {
+        ImageView meals;
+        TextView titles;
     }
 
 }
