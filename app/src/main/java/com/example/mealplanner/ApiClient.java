@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/";
+    public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     //    public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
     public static Retrofit retrofit;
 

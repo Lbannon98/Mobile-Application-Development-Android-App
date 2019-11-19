@@ -3,8 +3,6 @@ package com.example.mealplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +24,8 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ArrayAdapter adapter;
-    ListView listView;
+//    ArrayAdapter adapter;
+//    ListView listView;
 //    TextView emptyView;
 
     public static final String API_KEY = "1";
@@ -126,8 +124,13 @@ public class SearchActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapt);
                     adapt.notifyDataSetChanged();
 
+                    System.out.println(response.body());
+
+                    Toast.makeText(SearchActivity.this, "It worked!!", Toast.LENGTH_LONG).show();
+
                 } else {
-                    Toast.makeText(SearchActivity.this, "No Result!", Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(SearchActivity.this, "Not working!!", Toast.LENGTH_LONG).show();
                 }
             }
 
