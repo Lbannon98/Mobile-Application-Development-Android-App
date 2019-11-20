@@ -5,9 +5,12 @@
     <string name="nav_favourites">Favourites</string>
     <string name="nav_meal_plan">Meal Planner</string>
     <string name="nav_home">Home</string>
-    <string name="toolbar_search">Search Meals</string>
+    <string name="toolbar_add">Add Meals</string>
     <string name="toolbar_favourites">Your Favourites</string>
     <!--    <string name="add_to_favourites">Add to Favourites</string>-->
     <string name="link_description">Click on the link below for the recipe!</string>
+    <string name="add_meal_title">Meal Name</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="save_meal">Save Meal</string>
 
 </resources>

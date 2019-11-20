@@ -37,7 +37,7 @@ public class MealPlanActivity extends AppCompatActivity {
 
                     case R.id.nav_search:
 
-                        Intent searchIntent = new Intent(MealPlanActivity.this, SearchActivity.class);
+                        Intent searchIntent = new Intent(MealPlanActivity.this, AddActivity.class);
                         searchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(searchIntent);
 
