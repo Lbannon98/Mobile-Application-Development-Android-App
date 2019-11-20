@@ -5,27 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <include
-        layout="@layout/search_toolbar"/>
+        layout="@layout/toolbar"/>
+
     <ListView
-        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar" />
-    <TextView
-        android:id="@+id/emptyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="No Results"
-        android:textSize="20sp"
-        android:visibility="gone" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/meal_details_toolbar"
+
+        android:id="@+id/listview"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation"
-        android:background="?android:attr/windowBackground"
-        />
+        android:background="?android:attr/windowBackground"/>
+
+
 </RelativeLayout>

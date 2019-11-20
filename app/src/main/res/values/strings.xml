@@ -1,22 +1,13 @@
 <resources>
-    <string name="app_name">MealPlanner</string>
+
+    <string name="app_name">Meals For You</string>
     <string name="nav_search">Search</string>
     <string name="nav_favourites">Favourites</string>
     <string name="nav_meal_plan">Meal Planner</string>
-    <string name="search_placeholder">Search Ingredients!</string>
+    <string name="nav_home">Home</string>
+    <string name="toolbar_search">Search Meals</string>
+    <string name="toolbar_favourites">Your Favourites</string>
+    <!--    <string name="add_to_favourites">Add to Favourites</string>-->
+    <string name="link_description">Click on the link below for the recipe!</string>
 
-    <array name="months">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
-    </array>
 </resources>
