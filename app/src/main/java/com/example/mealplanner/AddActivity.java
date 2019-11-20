@@ -51,7 +51,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,14 +72,6 @@ public class AddActivity extends AppCompatActivity {
                         Intent favouritesIntent = new Intent(AddActivity.this, FavouritesActivity.class);
                         favouritesIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(favouritesIntent);
-
-                        break;
-
-                    case R.id.nav_meal_plan:
-
-                        Intent mealPlanIntent = new Intent(AddActivity.this, MealPlanActivity.class);
-                        mealPlanIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(mealPlanIntent);
 
                         break;
 

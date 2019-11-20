@@ -61,18 +61,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch(menuItem.getItemId()) {
-                    case R.id.nav_search:
 
-                        Intent searchIntent = new Intent(MainActivity.this, AddActivity.class);
-                        searchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(searchIntent);
+                    case R.id.nav_add:
+
+                        Intent addIntent = new Intent(MainActivity.this, AddActivity.class);
+                        addIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(addIntent);
 
                         break;
 
@@ -81,14 +82,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent favouritesIntent = new Intent(MainActivity.this, FavouritesActivity.class);
                         favouritesIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(favouritesIntent);
-
-                        break;
-
-                    case R.id.nav_meal_plan:
-
-                        Intent mealPlanIntent = new Intent(MainActivity.this, MealPlanActivity.class);
-                        mealPlanIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(mealPlanIntent);
 
                         break;
 
