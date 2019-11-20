@@ -3,14 +3,13 @@ package com.example.mealplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,21 +37,27 @@ public class SearchActivity extends AppCompatActivity {
             R.drawable.cocktails_meatballs
     };
 
-    ArrayAdapter adapter;
-
-    private RecyclerView.LayoutManager layoutManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
 
-        toolbar = (Toolbar) findViewById(R.id.searchToolbar);
-        setSupportActionBar(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_search);
 
         listView = (ListView) findViewById(R.id.listview);
         Adapter myAdapter = new Adapter(SearchActivity.this, search_result_title, search_result_images);
         listView.setAdapter(myAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(SearchActivity.this, MealDetailActivity.class);
+                intent.putExtra("search_result_title", search_result_title[position]);
+                intent.putExtra("search_result_images", search_result_images[position]);
+                startActivity(intent);
+            }
+        });
 
         setSupportActionBar(toolbar);
 
@@ -63,6 +68,14 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch(menuItem.getItemId()) {
+                    case R.id.nav_home:
+
+                        Intent homeIntent = new Intent(SearchActivity.this, MainActivity.class);
+                        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(homeIntent);
+
+                        break;
+
 
                     case R.id.nav_favourites:
 
@@ -86,7 +99,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        layoutManager = new LinearLayoutManager(SearchActivity.this);
     }
 
 }

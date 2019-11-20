@@ -18,7 +18,7 @@ public class MealPlanActivity extends AppCompatActivity {
         setContentView(R.layout.meal_plan_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.nav_meal_plan);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
 
@@ -27,6 +27,14 @@ public class MealPlanActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch(menuItem.getItemId()) {
+                    case R.id.nav_home:
+
+                        Intent homeIntent = new Intent(MealPlanActivity.this, MainActivity.class);
+                        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(homeIntent);
+
+                        break;
+
                     case R.id.nav_search:
 
                         Intent searchIntent = new Intent(MealPlanActivity.this, SearchActivity.class);

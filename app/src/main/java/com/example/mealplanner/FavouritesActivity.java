@@ -19,7 +19,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.toolbar_favourites);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
 
@@ -28,6 +28,14 @@ public class FavouritesActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch(menuItem.getItemId()) {
+                    case R.id.nav_home:
+
+                        Intent homeIntent = new Intent(FavouritesActivity.this, MainActivity.class);
+                        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(homeIntent);
+
+                        break;
+
                     case R.id.nav_search:
 
                         Intent searchIntent = new Intent(FavouritesActivity.this, SearchActivity.class);
