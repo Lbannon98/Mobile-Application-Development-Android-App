@@ -23,14 +23,14 @@
             android:text="Meal Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:textSize="17sp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/card_view_images"/>
+            android:layout_below="@id/card_view_images"
+            android:fontFamily="sans-serif-condensed-light"/>
 
     </RelativeLayout>
 

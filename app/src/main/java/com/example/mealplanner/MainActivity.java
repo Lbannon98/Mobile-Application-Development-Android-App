@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
 
     //Titles
-    String[] search_result_title = new String[] {
+    public static String[] search_result_title = new String[] {
             "Spaghetti Bolognese", "Fried Chicken Sandwich", "Breakfast Burritos", "Indonesian Chicken Curry",
             "Crockpot Sun-Dried Tomato Penne Alla Vodka", "Brown Butter Confit Tomato Pasta", "Rosemary Lamb Steaks with Quick Bean Stew",
             "Cocktail Meatballs"
     };
 
     //Images
-    int[] search_result_images = new int[] {
+    public static int[] search_result_images = new int[] {
             R.drawable.spaghetti_bolognese,
             R.drawable.fried_chicken_sandwhich,
             R.drawable.breakfast_burrito,
