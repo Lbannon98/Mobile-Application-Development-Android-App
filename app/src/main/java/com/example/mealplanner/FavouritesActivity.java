@@ -34,8 +34,9 @@ public class FavouritesActivity extends AppCompatActivity {
         favouriteItems = new ArrayList<>();
 
         favouriteItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        favouriteItems.add(new Item(R.drawable.pepperoni_pizza_pasta, "Pepperoni Pizza Pasta"));
+        favouriteItems.add(new Item(R.drawable.tomato_vegetable_braised_chicken, "Tomato Vegetable Braised Chicken"));
         favouriteItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
-        favouriteItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(false);
