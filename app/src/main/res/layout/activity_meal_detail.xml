@@ -19,7 +19,8 @@
         android:layout_marginRight="20dp"
         android:gravity="center"
         android:text="@string/link_description"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-condensed-light"/>
 
     <TextView
         android:id="@+id/meal_link"
@@ -30,7 +31,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-condensed-light"/>
 
     <ImageView
         android:id="@+id/meal_image"

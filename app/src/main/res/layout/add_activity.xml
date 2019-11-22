@@ -6,61 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        layout="@layout/toolbar"/>
-
-    <EditText
-        android:id="@+id/add_meal_name"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:hint="@string/add_meal_title"/>
+        android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/camera_button"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_meal_name"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:text="@string/take_picture"
-        app:backgroundTint="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/add_meal_picture"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_below="@id/camera_button"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:background="@drawable/border"/>
+            <include
+                layout="@layout/toolbar"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_meal"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_meal_picture"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:text="@string/save_meal"
-        app:backgroundTint="@color/colorPrimary"/>
+            <EditText
+                android:id="@+id/add_meal_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:hint="@string/add_meal_title"
+                android:fontFamily="sans-serif-condensed-light"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schema.android.com/apk/res/res-auto"
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="start"
-        app:menu="@menu/my_navigation_items"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/camera_button"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_meal_name"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/take_picture"
+                app:backgroundTint="@color/colorPrimary"
+                android:fontFamily="sans-serif-condensed-light"/>
+
+            <ImageView
+                android:id="@+id/add_meal_picture"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_below="@id/camera_button"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/border"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_meal"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_meal_picture"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/save_meal"
+                app:backgroundTint="@color/colorPrimary"
+                android:fontFamily="sans-serif-condensed-light"/>
+
+        </LinearLayout>
+
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            xmlns:app="http://schema.android.com/apk/res/res-auto"-->
+<!--            android:id="@+id/navigation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:layout_gravity="start"-->
+<!--            app:menu="@menu/my_navigation_items"/>-->
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/my_navigation_items"

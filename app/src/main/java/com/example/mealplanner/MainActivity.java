@@ -3,39 +3,25 @@ package com.example.mealplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    ListView listView;
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private MainAdapter adapter;
 
-    //Titles
-    String[] search_result_title = new String[] {
-            "Spaghetti Bolognese", "Fried Chicken Sandwich", "Breakfast Burritos", "Indonesian Chicken Curry",
-            "Crockpot Sun-Dried Tomato Penne Alla Vodka", "Brown Butter Confit Tomato Pasta", "Rosemary Lamb Steaks with Quick Bean Stew",
-            "Cocktail Meatballs"
-    };
-
-    //Images
-    int[] search_result_images = new int[] {
-            R.drawable.spaghetti_bolognese,
-            R.drawable.fried_chicken_sandwhich,
-            R.drawable.breakfast_burrito,
-            R.drawable.bali_chicken_curry,
-            R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka,
-            R.drawable.butter_tomato_pasta,
-            R.drawable.lamb_bean_stew,
-            R.drawable.cocktails_meatballs
-    };
+    public ArrayList<Item> mainItems;
 
 
     @Override
@@ -46,20 +32,22 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_home);
 
-        listView = (ListView) findViewById(R.id.listview);
-        Adapter myAdapter = new Adapter(MainActivity.this, search_result_title, search_result_images);
-        listView.setAdapter(myAdapter);
+        mainItems = new ArrayList<>();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, MealDetailActivity.class);
-                intent.putExtra("search_result_title", search_result_title[position]);
-                intent.putExtra("search_result_images", search_result_images[position]);
-                startActivity(intent);
-            }
-        });
+        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
+        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
+        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
+        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
+        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
 
+        buildRecyclerView();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -93,4 +81,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void buildRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(false);
+        layoutManager = new LinearLayoutManager(MainActivity.this);
+
+        adapter = new MainAdapter(mainItems);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                mainItems.get(position);
+
+                Intent mealDetailsIntent = new Intent(MainActivity.this, MealDetailActivity.class);
+                mealDetailsIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(mealDetailsIntent);
+            }
+        });
+    }
 }

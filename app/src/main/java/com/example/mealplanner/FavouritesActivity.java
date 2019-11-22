@@ -7,19 +7,44 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class FavouritesActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter adapter;
+
+    public ArrayList<Item> favouriteItems;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favourites_activity);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_favourites);
+
+        favouriteItems = new ArrayList<>();
+
+        favouriteItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        favouriteItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
+        favouriteItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(false);
+        layoutManager = new LinearLayoutManager(FavouritesActivity.this);
+
+        adapter = new FavouritesAdapter(favouriteItems);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -49,7 +74,6 @@ public class FavouritesActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
     }
 }
