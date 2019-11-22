@@ -1,10 +1,10 @@
 package com.example.mealplanner;
 
-public class FavouritesItem {
+public class Item {
     private int image;
     private String name;
 
-    public FavouritesItem(int image, String name) {
+    public Item(int image, String name) {
         this.image = image;
         this.name = name;
     }

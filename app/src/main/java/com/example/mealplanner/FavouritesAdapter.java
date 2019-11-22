@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.ViewHolder> {
 
-    ArrayList<FavouritesItem> favouritesItems;
+    ArrayList<Item> items;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -27,8 +27,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         }
     }
 
-    public FavouritesAdapter(ArrayList<FavouritesItem> favouritesItems) {
-        this.favouritesItems = favouritesItems;
+    public FavouritesAdapter(ArrayList<Item> items) {
+        this.items = items;
     }
 
     @NonNull
@@ -43,15 +43,17 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        FavouritesItem currentItem = favouritesItems.get(position);
+        Item currentItem = items.get(position);
 
         holder.image.setImageResource(currentItem.getImage());
         holder.meal.setText(currentItem.getName());
+
+//        holder.p
 
     }
 
     @Override
     public int getItemCount() {
-        return favouritesItems.size();
+        return items.size();
     }
 }

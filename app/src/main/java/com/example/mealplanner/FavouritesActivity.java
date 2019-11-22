@@ -17,10 +17,10 @@ import java.util.ArrayList;
 public class FavouritesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-
-//    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
+
+    public ArrayList<Item> favouriteItems;
 
 
     @Override
@@ -31,12 +31,11 @@ public class FavouritesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_favourites);
 
+        favouriteItems = new ArrayList<>();
 
-        ArrayList<FavouritesItem> favouriteItems = new ArrayList<>();
-
-        favouriteItems.add(new FavouritesItem(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
-        favouriteItems.add(new FavouritesItem(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
-        favouriteItems.add(new FavouritesItem(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+        favouriteItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        favouriteItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
+        favouriteItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(false);
@@ -46,12 +45,6 @@ public class FavouritesActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-//        layoutManager = new LinearLayoutManager(FavouritesActivity.this);
-//
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setNestedScrollingEnabled(false);
-//        recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -81,7 +74,6 @@ public class FavouritesActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
     }
 }
