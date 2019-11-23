@@ -68,16 +68,6 @@
 
         </LinearLayout>
 
-
-<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--            xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--            xmlns:app="http://schema.android.com/apk/res/res-auto"-->
-<!--            android:id="@+id/navigation"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="56dp"-->
-<!--            android:layout_gravity="start"-->
-<!--            app:menu="@menu/my_navigation_items"/>-->
-
     </androidx.core.widget.NestedScrollView>
 
 
@@ -87,8 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/bottom_navigation_colours"
-        app:itemTextColor="@color/bottom_navigation_colours"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/my_navigation_items"
         android:background="?android:attr/windowBackground"/>
 

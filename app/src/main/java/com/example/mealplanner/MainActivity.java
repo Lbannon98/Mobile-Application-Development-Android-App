@@ -34,18 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
         mainItems = new ArrayList<>();
 
-        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
+        mainItems.add(new Item(R.drawable.tomato_vegetable_braised_chicken, "Tomato Vegetable Braised Chicken"));
         mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
-        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+        mainItems.add(new Item(R.drawable.general_tsos_tofu_stir_fry, "General Tso's Tofu Stir Fry"));
         mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
-        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
         mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
-        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
-        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
-        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
-        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry"));
-        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew"));
-        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka"));
+        mainItems.add(new Item(R.drawable.pepperoni_pizza_pasta, "Pepperoni Pizza Pasta"));
+        mainItems.add(new Item(R.drawable.fried_chicken_sandwhich, "Fried Chicken Sandwhich"));
+        mainItems.add(new Item(R.drawable.cocktails_meatballs, "Cocktail Meatballs"));
+        mainItems.add(new Item(R.drawable.butter_tomato_pasta, "Brown Butter Confit Tomato Pasta"));
+        mainItems.add(new Item(R.drawable.breakfast_burrito, "Breakfast Burritos"));
+        mainItems.add(new Item(R.drawable.spaghetti_bolognese, "Spaghetti Bolognese"));
+        mainItems.add(new Item(R.drawable.vietnamese_turmeric_dill_fish, "Vietnamese Turmeric Dill Fish"));
 
         buildRecyclerView();
 

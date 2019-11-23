@@ -36,9 +36,8 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="Meal Name"
-            android:textColor="@android:color/black"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 

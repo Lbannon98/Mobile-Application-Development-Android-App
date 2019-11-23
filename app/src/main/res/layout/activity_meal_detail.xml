@@ -20,7 +20,8 @@
         android:gravity="center"
         android:text="@string/link_description"
         android:textSize="18sp"
-        android:fontFamily="sans-serif-condensed-light"/>
+        android:fontFamily="sans-serif-condensed-light"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/meal_link"
@@ -49,8 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/bottom_navigation_colours"
-        app:itemTextColor="@color/bottom_navigation_colours"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/my_navigation_items"
         android:background="?android:attr/windowBackground"/>
 

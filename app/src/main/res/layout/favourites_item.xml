@@ -34,6 +34,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="25dp"
             android:fontFamily="sans-serif-condensed-light"
+            android:textStyle="bold"
             android:text="@string/add_meal_title"
             android:textSize="18sp" />
 
@@ -45,7 +46,8 @@
             android:layout_marginLeft="210dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif-condensed-light"
-            android:textSize="18sp" />
+            android:textStyle="bold"
+            android:textSize="18sp"/>
 
     </RelativeLayout>
 
