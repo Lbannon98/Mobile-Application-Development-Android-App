@@ -28,6 +28,6 @@
         android:paddingRight="20dp"
         android:paddingTop="10dp"
         android:layout_below="@id/splash_screen_text"
-        android:src="@drawable/splash_screen" />
+        android:src="@drawable/logo" />
 
 </RelativeLayout>
