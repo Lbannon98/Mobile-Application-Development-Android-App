@@ -15,9 +15,23 @@ public class Item {
         return image;
     }
 
+    public void setImage(int image) {
+        this.image = image;
+    }
+
     public String getName() {
         return name;
     }
 
-    public String getLink() { return link; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 }
