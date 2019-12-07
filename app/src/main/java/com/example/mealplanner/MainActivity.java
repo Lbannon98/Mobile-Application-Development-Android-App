@@ -2,7 +2,10 @@ package com.example.mealplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,9 +30,21 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<Item> mainItems;
     private FirebaseRecyclerOptions<Item> options;
-    private FirebaseRecyclerAdapter<Item, ItemViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Item, ItemViewHolder>  adapter;
 
     public DatabaseReference databaseReference;
+
+    protected void onStart() {
+        super.onStart();
+
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         mainItems = new ArrayList<Item>();
 
-//        options = new
+        firebaseConfig();
+
+        buildRecyclerView();
 
 //        mainItems.add(new Item(R.drawable.tomato_vegetable_braised_chicken, "Tomato Vegetable Braised Chicken", null));
 //        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew", null));
@@ -59,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 //        mainItems.add(new Item(R.drawable.spaghetti_bolognese, "Spaghetti Bolognese", null));
 //        mainItems.add(new Item(R.drawable.vietnamese_turmeric_dill_fish, "Vietnamese Turmeric Dill Fish", null));
 
-        buildRecyclerView();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -98,34 +114,45 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(MainActivity.this);
 
-//        adapter = new MainAdapter(mainItems);
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-//        adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                mainItems.get(position);
-//
-//                Intent mealDetailsIntent = new Intent(MainActivity.this, MealDetailActivity.class);
-//                mealDetailsIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                startActivity(mealDetailsIntent);
-//            }
-//        });
     }
 
-    public void onStart() {
-        super.onStart();
+    public void firebaseConfig() {
 
-//        FirebaseRecyclerAdapter<Item, ItemViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Item,ItemViewHolder>(Item.class, R.layout.main_item, ItemViewHolder.class, databaseReference) {
-//
-//            @Override
-//            protected void populateViewHolder(ItemViewHolder viewHolder, Item model, int position) {
-//
-//            }
-//        };
+        options = new FirebaseRecyclerOptions.Builder<Item>().setQuery(databaseReference, Item.class).build();
 
+        adapter = new FirebaseRecyclerAdapter<Item, ItemViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull final Item model) {
+
+                holder.meal.setText(model.getName());
+
+//                    holder.image.setImageResource(Integer.parseInt(model.getImage()));
+
+//                holder.image.setImageResource(model.getImage());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, MealDetailActivity.class);
+                        intent.putExtra("meal", model.getName());
+                        intent.putExtra("link", model.getLink());
+//                            intent.putExtra("image", model.getImage());
+//                        intent.putExtra("image", model.getImage());
+                        startActivity(intent);
+                    }
+                });
+
+            }
+
+            @NonNull
+            @Override
+            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new ItemViewHolder(LayoutInflater.from(MainActivity.this).inflate(R.layout.main_item, parent, false));
+
+            }
+        };
     }
 
 }

@@ -45,7 +45,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
         Item currentItem = items.get(position);
 
-        holder.image.setImageResource(currentItem.getImage());
+//        holder.image.setImageResource(currentItem.getImage());
         holder.meal.setText(currentItem.getName());
 
 //        holder.p

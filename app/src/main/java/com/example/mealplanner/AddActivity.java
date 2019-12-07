@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,18 +20,30 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class AddActivity extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_IMAGE_GET = 2;
-    static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_GET = 2;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
 
-    Toolbar toolbar;
-    Button cameraButton;
-    ImageView add_picture;
-    Button saveButton;
+    private Toolbar toolbar;
+    private Button cameraButton;
+    private TextView add_meal_name;
+    private ImageView add_picture;
+    private Button saveButton;
+    private Uri imageUri;
+
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +54,8 @@ public class AddActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.toolbar_add);
 
         cameraButton = (Button) findViewById(R.id.camera_button);
+        saveButton = (Button) findViewById(R.id.save_meal);
+        add_meal_name = (TextView) findViewById(R.id.add_meal_name);
         add_picture = (ImageView) findViewById(R.id.add_meal_picture);
 
 //        setSupportActionBar(toolbar);
@@ -48,6 +63,13 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 takePicture();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addMeal();
             }
         });
 
@@ -83,26 +105,40 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    public void firebaseConfig() {
+        storageReference = FirebaseStorage.getInstance().getReference("Added_Meals");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Added_Meals");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             add_picture.setImageBitmap(imageBitmap);
+
         }
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             try {
+
                 Uri imageUri = data.getData();
                 Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                System.out.println("IMAGE URI HEREEEEEEEEEEEE" + imageUri);
                 add_picture.setImageBitmap(thumbnail);
+
+
             } catch (Exception e) {
+
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(),"Exception: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+
             }
         }
     }
 
     private void cameraIntentCode() {
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -110,6 +146,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void takePicture() {
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
         } else {
@@ -120,6 +157,7 @@ public class AddActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
+
             case MY_PERMISSIONS_REQUEST_CAMERA: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     cameraIntentCode();
@@ -130,6 +168,33 @@ public class AddActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void addMeal() {
+        if(imageUri != null) {
+
+            StorageReference fileReference = storageReference.child(String.valueOf(System.currentTimeMillis()));
+            fileReference.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(AddActivity.this, "Meal Added Successfully", Toast.LENGTH_LONG).show();
+
+                            Add add = new Add(add_meal_name.getText().toString().trim(),
+                                    taskSnapshot.getUploadSessionUri().toString());
+                            String addedMealId = databaseReference.push().getKey();
+                            databaseReference.child(addedMealId).setValue(add);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(AddActivity.this, "Take picture of meal!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

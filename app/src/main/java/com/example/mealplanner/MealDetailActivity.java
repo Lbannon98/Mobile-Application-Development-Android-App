@@ -2,8 +2,10 @@ package com.example.mealplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,27 +14,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 public class MealDetailActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    TextView link_description;
-    TextView meal_link;
+    private Toolbar toolbar;
+//    private TextView link_description;
+    private TextView meal_link;
+    private TextView meal_name;
 
-    String[] search_result_urls = new String[] {
-            "http://www.donalskehan.com/recipes/tomato-vegetable-braised-chicken/",
-            "http://www.donalskehan.com/recipes/rosemary-lamb-steaks-with-quick-bean-stew/",
-            "http://www.donalskehan.com/recipes/general-tsos-tofu-stir-fry/",
-            "http://www.donalskehan.com/recipes/indonesian-chicken-curry/",
-            "http://www.donalskehan.com/recipes/crockpot-sun-dried-tomato-penne-alla-vodka/",
-            "http://www.donalskehan.com/recipes/pepperoni-pizza-pasta/",
-            "http://www.donalskehan.com/recipes/fried-chicken-sandwich/",
-            "http://www.donalskehan.com/recipes/cocktail-meatballs/",
-            "http://www.donalskehan.com/recipes/brown-butter-confit-tomato-pasta/",
-            "http://www.donalskehan.com/recipes/breakfast-burritos/",
-            "http://www.donalskehan.com/recipes/spaghetti-bolognese/",
-            "http://www.donalskehan.com/recipes/vietnamese-turmeric-dill-fish/"
-    };
+//    String[] search_result_urls = new String[] {
+//            "http://www.donalskehan.com/recipes/tomato-vegetable-braised-chicken/",
+//            "http://www.donalskehan.com/recipes/rosemary-lamb-steaks-with-quick-bean-stew/",
+//            "http://www.donalskehan.com/recipes/general-tsos-tofu-stir-fry/",
+//            "http://www.donalskehan.com/recipes/indonesian-chicken-curry/",
+//            "http://www.donalskehan.com/recipes/crockpot-sun-dried-tomato-penne-alla-vodka/",
+//            "http://www.donalskehan.com/recipes/pepperoni-pizza-pasta/",
+//            "http://www.donalskehan.com/recipes/fried-chicken-sandwich/",
+//            "http://www.donalskehan.com/recipes/cocktail-meatballs/",
+//            "http://www.donalskehan.com/recipes/brown-butter-confit-tomato-pasta/",
+//            "http://www.donalskehan.com/recipes/breakfast-burritos/",
+//            "http://www.donalskehan.com/recipes/spaghetti-bolognese/",
+//            "http://www.donalskehan.com/recipes/vietnamese-turmeric-dill-fish/"
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,11 @@ public class MealDetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.meal_details_toolbar);
         setSupportActionBar(toolbar);
 
-        link_description  = (TextView) findViewById(R.id.meal_link);
+//        link_description  = (TextView) findViewById(R.id.meal_link);
         meal_link  = (TextView) findViewById(R.id.meal_link);
+        meal_name  = (TextView) findViewById(R.id.meal_name_detail);
+
+        setUp();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -83,6 +90,45 @@ public class MealDetailActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void setUp() {
+
+        Intent intent = getIntent();
+
+        String meal = intent.getStringExtra("meal");
+        String link = intent.getStringExtra("link");
+//        String image = intent.getStringExtra("image");
+
+        ImageView imageView = (ImageView) findViewById(R.id.meal_image);
+        String imageUrl = String.valueOf(intent.getStringExtra("image"));
+//
+        Log.d("LOG_TAG", imageUrl);
+        Picasso.get().load(imageUrl).into(imageView);
+
+
+//        ImageView imageView = (ImageView) findViewById(R.id.meal_image);
+//        String imageUrl = String.valueOf(intent.getStringExtra("image"));
+//
+//        Log.d("LOG_TAG", imageUrl);
+//        Picasso.get().load(imageUrl).into(imageView);
+
+        meal_link.setText(link);
+        meal_name.setText(meal);
+
+        Toast.makeText(MealDetailActivity.this, "" + meal, Toast.LENGTH_LONG).show();
+
+
+//        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//        strImage= String.valueOf(intent.getStringExtra("Image"));
+//        Log.d("LOG_TAG" strImage);
+//        Picasso.with(this)
+//                .load(strImage)
+//                .into(imageView);
+//
+//        String meal = getIntent().getStringExtra("meal");
+//        int image = getIntent().getIntExtra("image");
 
     }
 

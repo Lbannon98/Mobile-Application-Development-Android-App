@@ -67,7 +67,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         Item currentItem = items.get(position);
 
-        holder.image.setImageResource(currentItem.getImage());
+//        holder.image.setImageResource(currentItem.getImage());
         holder.meal.setText(currentItem.getName());
 
     }
