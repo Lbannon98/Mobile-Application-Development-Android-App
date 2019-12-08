@@ -18,19 +18,16 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-//    private MainAdapter adapter;
 
-    public ArrayList<Item> mainItems;
     private FirebaseRecyclerOptions<Item> options;
-    private FirebaseRecyclerAdapter<Item, ItemViewHolder>  adapter;
+    private FirebaseRecyclerAdapter<Item, MainViewHolder> adapter;
 
     public DatabaseReference databaseReference;
 
@@ -57,25 +54,9 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("id");
         databaseReference.keepSynced(true);
 
-        mainItems = new ArrayList<Item>();
-
         firebaseConfig();
 
         buildRecyclerView();
-
-//        mainItems.add(new Item(R.drawable.tomato_vegetable_braised_chicken, "Tomato Vegetable Braised Chicken", null));
-//        mainItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew", null));
-//        mainItems.add(new Item(R.drawable.general_tsos_tofu_stir_fry, "General Tso's Tofu Stir Fry", null));
-//        mainItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry", null));
-//        mainItems.add(new Item(R.drawable.crockpot_sun_dried_tomato_penne_alla_vodka, "Crockpot Sun-Dried Tomato Penne Alla Vodka", null));
-//        mainItems.add(new Item(R.drawable.pepperoni_pizza_pasta, "Pepperoni Pizza Pasta", null));
-//        mainItems.add(new Item(R.drawable.fried_chicken_sandwhich, "Fried Chicken Sandwhich", null));
-//        mainItems.add(new Item(R.drawable.cocktails_meatballs, "Cocktail Meatballs", null));
-//        mainItems.add(new Item(R.drawable.butter_tomato_pasta, "Brown Butter Confit Tomato Pasta", null));
-//        mainItems.add(new Item(R.drawable.breakfast_burrito, "Breakfast Burritos", null));
-//        mainItems.add(new Item(R.drawable.spaghetti_bolognese, "Spaghetti Bolognese", null));
-//        mainItems.add(new Item(R.drawable.vietnamese_turmeric_dill_fish, "Vietnamese Turmeric Dill Fish", null));
-
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -110,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buildRecyclerView() {
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view_main);
         recyclerView.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(MainActivity.this);
 
@@ -123,22 +104,25 @@ public class MainActivity extends AppCompatActivity {
 
         options = new FirebaseRecyclerOptions.Builder<Item>().setQuery(databaseReference, Item.class).build();
 
-        adapter = new FirebaseRecyclerAdapter<Item, ItemViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Item, MainViewHolder>(options) {
+
             @Override
-            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull final Item model) {
+            protected void onBindViewHolder(@NonNull MainViewHolder holder, int position, @NonNull final Item model) {
 
                 holder.meal.setText(model.getName());
+                Picasso.get().load(model.getImage()).into(holder.image);
 
-//                    holder.image.setImageResource(Integer.parseInt(model.getImage()));
+//                holder.image.setImageResource(Integer.parseInt(model.getImage()));
 
 //                holder.image.setImageResource(model.getImage());
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, MealDetailActivity.class);
                         intent.putExtra("meal", model.getName());
                         intent.putExtra("link", model.getLink());
-//                            intent.putExtra("image", model.getImage());
+//                        intent.putExtra("image", model.getImage());
 //                        intent.putExtra("image", model.getImage());
                         startActivity(intent);
                     }
@@ -148,9 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
             @NonNull
             @Override
-            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new ItemViewHolder(LayoutInflater.from(MainActivity.this).inflate(R.layout.main_item, parent, false));
-
+            public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new MainViewHolder(LayoutInflater.from(MainActivity.this).inflate(R.layout.main_item, parent, false));
             }
         };
     }

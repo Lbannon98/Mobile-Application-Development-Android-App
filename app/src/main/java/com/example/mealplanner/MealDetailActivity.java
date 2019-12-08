@@ -14,41 +14,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class MealDetailActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-//    private TextView link_description;
     private TextView meal_link;
     private TextView meal_name;
+    private ImageView meal_image;
 
-//    String[] search_result_urls = new String[] {
-//            "http://www.donalskehan.com/recipes/tomato-vegetable-braised-chicken/",
-//            "http://www.donalskehan.com/recipes/rosemary-lamb-steaks-with-quick-bean-stew/",
-//            "http://www.donalskehan.com/recipes/general-tsos-tofu-stir-fry/",
-//            "http://www.donalskehan.com/recipes/indonesian-chicken-curry/",
-//            "http://www.donalskehan.com/recipes/crockpot-sun-dried-tomato-penne-alla-vodka/",
-//            "http://www.donalskehan.com/recipes/pepperoni-pizza-pasta/",
-//            "http://www.donalskehan.com/recipes/fried-chicken-sandwich/",
-//            "http://www.donalskehan.com/recipes/cocktail-meatballs/",
-//            "http://www.donalskehan.com/recipes/brown-butter-confit-tomato-pasta/",
-//            "http://www.donalskehan.com/recipes/breakfast-burritos/",
-//            "http://www.donalskehan.com/recipes/spaghetti-bolognese/",
-//            "http://www.donalskehan.com/recipes/vietnamese-turmeric-dill-fish/"
-//    };
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_detail);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Favourites");
+
         toolbar = (Toolbar) findViewById(R.id.meal_details_toolbar);
         setSupportActionBar(toolbar);
 
-//        link_description  = (TextView) findViewById(R.id.meal_link);
         meal_link  = (TextView) findViewById(R.id.meal_link);
         meal_name  = (TextView) findViewById(R.id.meal_name_detail);
+        meal_image = (ImageView) findViewById(R.id.meal_image);
 
         setUp();
 
@@ -116,9 +110,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
         meal_link.setText(link);
         meal_name.setText(meal);
-
-        Toast.makeText(MealDetailActivity.this, "" + meal, Toast.LENGTH_LONG).show();
-
+//        meal_image.setImageResource(imageView);
 
 //        ImageView imageView = (ImageView) findViewById(R.id.imageView);
 //        strImage= String.valueOf(intent.getStringExtra("Image"));
@@ -142,12 +134,37 @@ public class MealDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if((item.getItemId() == R.id.add_to_favourites)) {
-
-            //Include code that will add to database
-
-            Toast.makeText(getApplicationContext(), "Added to Database", Toast.LENGTH_LONG).show();
-
+            addToFavouites();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void addToFavouites () {
+        final String meal = meal_name.getText().toString().trim();
+
+        databaseReference.orderByChild("name").equalTo(meal)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            Toast.makeText(MealDetailActivity.this, "Already in your favourites", Toast.LENGTH_LONG).show();
+                        } else {
+
+                            String id = databaseReference.push().getKey();
+                            Item item = new Item(null, meal, null);
+                            databaseReference.child(id).setValue(item);
+
+                            Toast.makeText(MealDetailActivity.this, "Added to your favourites", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MealDetailActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
 }

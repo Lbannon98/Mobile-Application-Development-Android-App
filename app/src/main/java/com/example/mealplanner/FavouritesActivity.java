@@ -2,7 +2,9 @@ package com.example.mealplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,42 +12,48 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FavouritesActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
 
-    public ArrayList<Item> favouriteItems;
+    private FirebaseRecyclerOptions<Item> options;
+    private FirebaseRecyclerAdapter<Item, FavouritesViewHolder> adapter;
 
+    public DatabaseReference databaseReference;
+
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favourites_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_favourites);
 
-        favouriteItems = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Favourites");
+        databaseReference.keepSynced(true);
 
-//        favouriteItems.add(new Item(R.drawable.bali_chicken_curry, "Indonesian Chicken Curry", null));
-//        favouriteItems.add(new Item(R.drawable.pepperoni_pizza_pasta, "Pepperoni Pizza Pasta", null));
-//        favouriteItems.add(new Item(R.drawable.tomato_vegetable_braised_chicken, "Tomato Vegetable Braised Chicken", null));
-//        favouriteItems.add(new Item(R.drawable.lamb_bean_stew, "Rosemary Lamb Steaks with Quick Bean Stew", null));
+        firebaseConfig();
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(false);
-        layoutManager = new LinearLayoutManager(FavouritesActivity.this);
-
-        adapter = new FavouritesAdapter(favouriteItems);
-
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        buildRecyclerView();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -75,6 +83,42 @@ public class FavouritesActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+
+    public void buildRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view_favourites);
+        recyclerView.setHasFixedSize(false);
+        layoutManager = new LinearLayoutManager(FavouritesActivity.this);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    public void firebaseConfig() {
+
+        options = new FirebaseRecyclerOptions.Builder<Item>().setQuery(databaseReference, Item.class).build();
+
+        adapter = new FirebaseRecyclerAdapter<Item, FavouritesViewHolder> (options) {
+
+            @Override
+            protected void onBindViewHolder(@NonNull FavouritesViewHolder holder, int position, @NonNull Item model) {
+
+                holder.fav_meal_name.setText(model.getName());
+
+//                Picasso.get().load(model.getImage()).into(holder.fav_meal_image);
+
+////              holder.image.setImageResource(Integer.parseInt(model.getImage()));
+//                holder.image.setImageResource(model.getImage());
+            }
+
+            @NonNull
+            @Override
+            public FavouritesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new FavouritesViewHolder(LayoutInflater.from(FavouritesActivity.this).inflate(R.layout.favourites_item, parent, false));
+            }
+        };
 
     }
 }
