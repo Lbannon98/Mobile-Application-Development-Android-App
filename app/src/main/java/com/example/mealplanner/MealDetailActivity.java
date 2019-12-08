@@ -2,7 +2,6 @@ package com.example.mealplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -13,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -93,35 +94,11 @@ public class MealDetailActivity extends AppCompatActivity {
 
         String meal = intent.getStringExtra("meal");
         String link = intent.getStringExtra("link");
-//        String image = intent.getStringExtra("image");
-
-        ImageView imageView = (ImageView) findViewById(R.id.meal_image);
-        String imageUrl = String.valueOf(intent.getStringExtra("image"));
-//
-        Log.d("LOG_TAG", imageUrl);
-        Picasso.get().load(imageUrl).into(imageView);
-
-
-//        ImageView imageView = (ImageView) findViewById(R.id.meal_image);
-//        String imageUrl = String.valueOf(intent.getStringExtra("image"));
-//
-//        Log.d("LOG_TAG", imageUrl);
-//        Picasso.get().load(imageUrl).into(imageView);
+        String image = intent.getStringExtra("image");
 
         meal_link.setText(link);
         meal_name.setText(meal);
-//        meal_image.setImageResource(imageView);
-
-//        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//        strImage= String.valueOf(intent.getStringExtra("Image"));
-//        Log.d("LOG_TAG" strImage);
-//        Picasso.with(this)
-//                .load(strImage)
-//                .into(imageView);
-//
-//        String meal = getIntent().getStringExtra("meal");
-//        int image = getIntent().getIntExtra("image");
-
+        Picasso.get().load(image).into(meal_image);
     }
 
     @Override
@@ -135,6 +112,8 @@ public class MealDetailActivity extends AppCompatActivity {
 
         if((item.getItemId() == R.id.add_to_favourites)) {
             addToFavouites();
+        } else if(item.getItemId() == R.id.delete_from_favourites) {
+            removeFromFavouites();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -162,6 +141,52 @@ public class MealDetailActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Toast.makeText(MealDetailActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    public void removeFromFavouites() {
+        final String meal = meal_name.getText().toString().trim();
+
+        databaseReference.orderByChild("name").equalTo(meal)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(!(dataSnapshot.exists())) {
+                            Toast.makeText(MealDetailActivity.this, "Not in your favourites", Toast.LENGTH_LONG).show();
+                        } else {
+
+                            for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                                ds.getRef().removeValue();
+                            }
+
+                            Toast.makeText(MealDetailActivity.this, "Removed from your favourites", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MealDetailActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        databaseReference.child("name").setValue(null)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MealDetailActivity.this, "Removed from your favourites", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MealDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

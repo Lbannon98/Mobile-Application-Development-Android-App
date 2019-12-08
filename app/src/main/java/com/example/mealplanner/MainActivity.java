@@ -112,18 +112,13 @@ public class MainActivity extends AppCompatActivity {
                 holder.meal.setText(model.getName());
                 Picasso.get().load(model.getImage()).into(holder.image);
 
-//                holder.image.setImageResource(Integer.parseInt(model.getImage()));
-
-//                holder.image.setImageResource(model.getImage());
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, MealDetailActivity.class);
                         intent.putExtra("meal", model.getName());
                         intent.putExtra("link", model.getLink());
-//                        intent.putExtra("image", model.getImage());
-//                        intent.putExtra("image", model.getImage());
+                        intent.putExtra("image", model.getImage());
                         startActivity(intent);
                     }
                 });
