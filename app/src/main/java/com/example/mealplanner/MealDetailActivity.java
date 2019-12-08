@@ -4,55 +4,48 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class MealDetailActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    TextView link_description;
-    TextView meal_link;
+    private Toolbar toolbar;
+    private TextView meal_link;
+    private TextView meal_name;
+    private ImageView meal_image;
 
-    String[] search_result_urls = new String[] {
-            "http://www.donalskehan.com/recipes/spaghetti-bolognese/", "http://www.donalskehan.com/recipes/fried-chicken-sandwich/",
-            "http://www.donalskehan.com/recipes/breakfast-burritos/", "http://www.donalskehan.com/recipes/indonesian-chicken-curry/",
-            "http://www.donalskehan.com/recipes/brown-butter-confit-tomato-pasta/", "http://www.donalskehan.com/recipes/crockpot-sun-dried-tomato-penne-alla-vodka/",
-            "http://www.donalskehan.com/recipes/rosemary-lamb-steaks-with-quick-bean-stew/", "http://www.donalskehan.com/recipes/cocktail-meatballs/"
-    };
-
-//    ImageView meal_image;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_detail);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Favourites");
+
         toolbar = (Toolbar) findViewById(R.id.meal_details_toolbar);
         setSupportActionBar(toolbar);
-//        toolbar.setTitle(R.string.add_to_favourites);
 
-        link_description  = (TextView) findViewById(R.id.meal_link);
         meal_link  = (TextView) findViewById(R.id.meal_link);
+        meal_name  = (TextView) findViewById(R.id.meal_name_detail);
+        meal_image = (ImageView) findViewById(R.id.meal_image);
 
-
-//        meal_image = (ImageView) findViewById(R.id.meal_image);
-
-//        Intent i = getIntent();
-//        String title = i.getStringExtra("search_result_title");
-//        Image image = i.getIntExtra("search_result_images");
-
-//        Bundle bundle = getIntent().getExtras();
-////        if(bundle != null) {
-////            meal_link.setText(bundle.getString("search_result_title"));
-//////            toolbar.setTitle(bundle.getString("search_result_title"));
-//            meal_image.setImageResource(bundle.getInt("search_result_images"));
-////        }
-
+        setUp();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.my_navigation_items);
 
@@ -95,22 +88,108 @@ public class MealDetailActivity extends AppCompatActivity {
 
     }
 
+    public void setUp() {
+
+        Intent intent = getIntent();
+
+        String meal = intent.getStringExtra("meal");
+        String link = intent.getStringExtra("link");
+        String image = intent.getStringExtra("image");
+
+        meal_link.setText(link);
+        meal_name.setText(meal);
+        Picasso.get().load(image).into(meal_image);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.meal_details_menu, menu);
         return true;
     }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//
-//        if((item.getItemId() == R.id.add_to_favourites)) {
-//
-//            //Include code that will add to database
-//
-//            Toast.makeText(getApplicationContext(), "Added to Database", Toast.LENGTH_LONG).show();
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if((item.getItemId() == R.id.add_to_favourites)) {
+            addToFavouites();
+        } else if(item.getItemId() == R.id.delete_from_favourites) {
+            removeFromFavouites();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void addToFavouites () {
+        final String meal = meal_name.getText().toString().trim();
+
+        databaseReference.orderByChild("name").equalTo(meal)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            Toast.makeText(MealDetailActivity.this, "Already in your favourites", Toast.LENGTH_LONG).show();
+                        } else {
+
+                            String id = databaseReference.push().getKey();
+                            Item item = new Item(null, meal, null);
+                            databaseReference.child(id).setValue(item);
+
+                            Toast.makeText(MealDetailActivity.this, "Added to your favourites", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MealDetailActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    public void removeFromFavouites() {
+        final String meal = meal_name.getText().toString().trim();
+
+        databaseReference.orderByChild("name").equalTo(meal)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(!(dataSnapshot.exists())) {
+                            Toast.makeText(MealDetailActivity.this, "Not in your favourites", Toast.LENGTH_LONG).show();
+                        } else {
+
+                            for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                                ds.getRef().removeValue();
+                            }
+
+                            Toast.makeText(MealDetailActivity.this, "Removed from your favourites", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MealDetailActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        databaseReference.child("name").setValue(null)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MealDetailActivity.this, "Removed from your favourites", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MealDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
 }

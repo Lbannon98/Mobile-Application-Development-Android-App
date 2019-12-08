@@ -10,11 +10,23 @@
         layout="@layout/meal_details_toolbar"/>
 
     <TextView
-        android:id="@+id/link_description"
+        android:id="@+id/meal_name_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/meal_details_toolbar"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-condensed-light"/>
+
+    <TextView
+        android:id="@+id/link_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/meal_name_detail"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
@@ -25,6 +37,8 @@
 
     <TextView
         android:id="@+id/meal_link"
+        android:autoLink="all"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/link_description"
@@ -32,7 +46,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:fontFamily="sans-serif-condensed-light"/>
 
     <ImageView
@@ -40,9 +54,10 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:layout_below="@+id/meal_link"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:paddingBottom="20dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/my_navigation_items"

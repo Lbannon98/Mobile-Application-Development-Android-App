@@ -8,6 +8,9 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginBottom="5dp"
+    android:id="@+id/fav_card_view"
+    android:clickable="true"
+    android:focusable="true"
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
