@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <include
-        layout="@layout/toolbar"/>
+        layout="@layout/favourites_toolbar"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_favourites"

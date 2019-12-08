@@ -3,8 +3,11 @@ package com.example.mealplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +25,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
+//    private CardView cardView;
     private RecyclerView.LayoutManager layoutManager;
 
     private FirebaseRecyclerOptions<Item> options;
@@ -45,8 +49,11 @@ public class FavouritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favourites_activity);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.favourites_toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.toolbar_favourites);
+
+//        cardView = (CardView) findViewById(R.id.fav_card_view);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Favourites");
         databaseReference.keepSynced(true);
@@ -103,9 +110,30 @@ public class FavouritesActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Item, FavouritesViewHolder> (options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull FavouritesViewHolder holder, int position, @NonNull Item model) {
+            protected void onBindViewHolder(@NonNull final FavouritesViewHolder holder, int position, @NonNull Item model) {
 
                 holder.fav_meal_name.setText(model.getName());
+
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        Toast.makeText(FavouritesActivity.this, "Long Pressed", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                });
+
+//                holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(FavouritesActivity.this, MealDetailActivity.class);
+//                        intent.putExtra("meal", model.getName());
+//                        intent.putExtra("link", model.getLink());
+////                        intent.putExtra("image", model.getImage());
+////                        intent.putExtra("image", model.getImage());
+//                        startActivity(intent);
+//                    }
+//                });
 
 //                Picasso.get().load(model.getImage()).into(holder.fav_meal_image);
 
@@ -120,5 +148,30 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         };
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.favourites_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if((item.getItemId() == R.id.add_to_favourites)) {
+            removeFromFavouites();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void removeFromFavouites() {
+//        cardView.setOnClickListener((View.OnClickListener) FavouritesActivity.this);
+
+//        cardView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//
+//                return false;
+//            }
+//        });
     }
 }
