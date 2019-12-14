@@ -28,6 +28,7 @@ public class MealDetailActivity extends AppCompatActivity {
     private TextView meal_link;
     private TextView meal_name;
     private ImageView meal_image;
+    public String image;
 
     DatabaseReference databaseReference;
 
@@ -94,7 +95,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
         String meal = intent.getStringExtra("meal");
         String link = intent.getStringExtra("link");
-        String image = intent.getStringExtra("image");
+        image = intent.getStringExtra("image");
 
         meal_link.setText(link);
         meal_name.setText(meal);
@@ -120,6 +121,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
     public void addToFavouites () {
         final String meal = meal_name.getText().toString().trim();
+//        final String image = meal_image.getImageMatrix().toString().trim();
 
         databaseReference.orderByChild("name").equalTo(meal)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -130,7 +132,7 @@ public class MealDetailActivity extends AppCompatActivity {
                         } else {
 
                             String id = databaseReference.push().getKey();
-                            Item item = new Item(null, meal, null);
+                            Item item = new Item(image, meal, null);
                             databaseReference.child(id).setValue(item);
 
                             Toast.makeText(MealDetailActivity.this, "Added to your favourites", Toast.LENGTH_LONG).show();
