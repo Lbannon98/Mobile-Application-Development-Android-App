@@ -1,6 +1,13 @@
 package com.example.mealplanner;
 
+/*
+    This class contains all the variables that will store all necessary information for the
+    meals on the Home screen.
+    Item takes in the parameters of image (String as it is a url), name, link
+*/
+
 public class Item {
+
     public String image;
     public String name;
     public String link;

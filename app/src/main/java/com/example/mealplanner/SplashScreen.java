@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+//This activity controls the animation and display on the the splash screen
+
 public class SplashScreen extends AppCompatActivity {
 
     Animation animation;
@@ -28,6 +30,11 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+
+                    /*
+                        Defines the animation as the fade which has been defined in the animation resource directory
+                        The animation is then applied to both the title and image on the splash screen
+                     */
 
                     animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade);
                     title.startAnimation(animation);

@@ -17,5 +17,7 @@
     <string name="remove_from_favourites_success">Removed from your favourites</string>
     <string name="meal_added_success">Meal Added Successfully</string>
     <string name="meal_added_failure">Take picture of meal!</string>
+    <string name="exception">Exception:</string>
+    <string name="permission_denied">Permission denied</string>
 
 </resources>

@@ -17,4 +17,6 @@
     <string name="take_picture">Tomar la foto</string>
     <string name="toolbar_add">" Agregar comidas"</string>
     <string name="toolbar_favourites">" Sus favoritos"</string>
+    <string name="exception">Excepción:</string>
+    <string name="permission_denied">Permiso denegado</string>
 </resources>
