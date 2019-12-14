@@ -102,15 +102,15 @@ public class FavouritesActivity extends AppCompatActivity {
 
         options = new FirebaseRecyclerOptions.Builder<Item>().setQuery(databaseReference, Item.class).build();
 
-        adapter = new FirebaseRecyclerAdapter<Item, FavouritesViewHolder> (options) {
+        adapter = new FirebaseRecyclerAdapter<Item, FavouritesViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull final FavouritesViewHolder holder, int position, @NonNull Item model) {
+            protected void onBindViewHolder(@NonNull FavouritesViewHolder holder, int position, @NonNull final Item model) {
 
                 holder.fav_meal_name.setText(model.getName());
-
-                //Fix image displaying on favourites page
-                Picasso.get().load(model.getImage()).into(holder.fav_meal_image);
+                Picasso.get()
+                        .load(model.getImage())
+                        .into(holder.fav_meal_image);
             }
 
             @NonNull
@@ -119,7 +119,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 return new FavouritesViewHolder(LayoutInflater.from(FavouritesActivity.this).inflate(R.layout.favourites_item, parent, false));
             }
         };
-
     }
+
 
 }
