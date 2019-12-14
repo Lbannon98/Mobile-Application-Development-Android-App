@@ -122,9 +122,8 @@ public class AddActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             try {
 
-                Uri imageUri = data.getData();
-                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                System.out.println("IMAGE URI HEREEEEEEEEEEEE" + imageUri);
+                Uri imageURL = data.getData();
+                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURL);
                 add_picture.setImageBitmap(thumbnail);
 
 
