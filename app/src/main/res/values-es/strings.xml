@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">" Deliciosos platos"</string>
+    <string name="add_meal_title">Nombre de la comida</string>
+    <string name="add_to_favourites_exists">" Ya en tus favoritos"</string>
+    <string name="add_to_favourites_success">Agregado a tus favoritos</string>
+    <string name="link_description">Haga clic en el enlace de abajo para la receta!</string>
+    <string name="meal_added_failure">" ¡Toma una foto de la comida!"</string>
+    <string name="meal_added_success">" Comida añadida con éxito"</string>
+    <string name="nav_add">" Añadir"</string>
+    <string name="nav_favourites">Favoritos</string>
+    <string name="nav_home">" Casa"</string>
+    <string name="nav_meal_plan">" Planificador de comidas"</string>
+    <string name="remove_from_favourites_exists">No en tus favoritos</string>
+    <string name="remove_from_favourites_success">" Eliminado de tus favoritos"</string>
+    <string name="save_meal">" Guardar comida"</string>
+    <string name="take_picture">Tomar la foto</string>
+    <string name="toolbar_add">" Agregar comidas"</string>
+    <string name="toolbar_favourites">" Sus favoritos"</string>
+</resources>

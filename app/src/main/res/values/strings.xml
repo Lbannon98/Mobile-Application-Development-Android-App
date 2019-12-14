@@ -15,5 +15,7 @@
     <string name="add_to_favourites_success">Added to your favourites</string>
     <string name="remove_from_favourites_exists">Not in your favourites</string>
     <string name="remove_from_favourites_success">Removed from your favourites</string>
+    <string name="meal_added_success">Meal Added Successfully</string>
+    <string name="meal_added_failure">Take picture of meal!</string>
 
 </resources>

@@ -177,7 +177,7 @@ public class AddActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(AddActivity.this, "Meal Added Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddActivity.this, R.string.meal_added_success, Toast.LENGTH_LONG).show();
 
                             Add add = new Add(add_meal_name.getText().toString().trim(),
                                     taskSnapshot.getUploadSessionUri().toString());
@@ -192,7 +192,7 @@ public class AddActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(AddActivity.this, "Take picture of meal!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddActivity.this, R.string.meal_added_failure, Toast.LENGTH_SHORT).show();
         }
     }
 
