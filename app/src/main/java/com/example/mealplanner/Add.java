@@ -1,19 +1,27 @@
 package com.example.mealplanner;
 
+
+/*
+    This class contains all the variables that will store all necessary information for adding
+    a meal on the Add screen
+    Add takes in the parameters of name and imageUri
+*/
+
+
 public class Add {
 
     private String name;
-    private String imageUrl;
+    private String imageUri;
 
     public Add(){ }
 
-    public Add(String name, String imageUrl) {
+    public Add(String name, String imageUri) {
         if(name.trim().equals("")) {
             name = "No name";
         }
 
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.imageUri = imageUri;
     }
 
     public String getName() {
@@ -24,11 +32,11 @@ public class Add {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String imageUri() {
+        return imageUri;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String imageUri) {
+        this.imageUri = imageUri;
     }
 }

@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+//This activity is in control of displaying all the meals by pulling from the database.
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Sets up the recycler view
     public void buildRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view_main);
         recyclerView.setHasFixedSize(false);
@@ -99,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+    /*
+        Configures Firebase with the references
+        Controls the display of the content on the screen by pulling from the database.
+     */
+
 
     public void firebaseConfig() {
 

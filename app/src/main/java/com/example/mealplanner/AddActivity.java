@@ -29,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+//This activity controls the functionality behind adding a meal to the database.
+
 public class AddActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -58,7 +60,6 @@ public class AddActivity extends AppCompatActivity {
         add_meal_name = (TextView) findViewById(R.id.add_meal_name);
         add_picture = (ImageView) findViewById(R.id.add_meal_picture);
 
-//        setSupportActionBar(toolbar);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +106,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    //Setting up Firebase references
     public void firebaseConfig() {
         storageReference = FirebaseStorage.getInstance().getReference("Added_Meals");
         databaseReference = FirebaseDatabase.getInstance().getReference("Added_Meals");
@@ -122,15 +124,15 @@ public class AddActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             try {
 
-                Uri imageURL = data.getData();
-                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURL);
+                imageUri = data.getData();
+                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 add_picture.setImageBitmap(thumbnail);
 
 
             } catch (Exception e) {
 
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),"Exception: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.exception + e.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -169,6 +171,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    //Adds meal to the database
     private void addMeal() {
         if(imageUri != null) {
 
@@ -177,7 +180,7 @@ public class AddActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(AddActivity.this, "Meal Added Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddActivity.this, R.string.meal_added_success, Toast.LENGTH_LONG).show();
 
                             Add add = new Add(add_meal_name.getText().toString().trim(),
                                     taskSnapshot.getUploadSessionUri().toString());
@@ -192,7 +195,7 @@ public class AddActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(AddActivity.this, "Take picture of meal!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddActivity.this, R.string.meal_added_failure, Toast.LENGTH_SHORT).show();
         }
     }
 

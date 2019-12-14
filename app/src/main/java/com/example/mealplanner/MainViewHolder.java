@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+//This holds the content needed to display on the home screen.
+
 public class MainViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView image;

@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+//This holds the content needed to display on the Favourites screen.
+
 public class FavouritesViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView fav_meal_image;

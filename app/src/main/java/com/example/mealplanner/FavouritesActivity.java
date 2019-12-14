@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+//This activity controls the meal favourites by adding and deleting from the database.
+
 public class FavouritesActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -88,6 +90,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
     }
 
+    //Sets up the recycler view
     public void buildRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view_favourites);
         recyclerView.setHasFixedSize(false);
@@ -97,6 +100,11 @@ public class FavouritesActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+    /*
+        Configures Firebase with the references
+        Controls the display of the content on the screen by pulling from the database.
+     */
 
     public void firebaseConfig() {
 
@@ -120,6 +128,5 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         };
     }
-
 
 }

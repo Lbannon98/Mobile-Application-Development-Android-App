@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -128,14 +126,14 @@ public class MealDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()) {
-                            Toast.makeText(MealDetailActivity.this, "Already in your favourites", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MealDetailActivity.this, R.string.add_to_favourites_exists, Toast.LENGTH_LONG).show();
                         } else {
 
                             String id = databaseReference.push().getKey();
                             Item item = new Item(image, meal, null);
                             databaseReference.child(id).setValue(item);
 
-                            Toast.makeText(MealDetailActivity.this, "Added to your favourites", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MealDetailActivity.this, R.string.add_to_favourites_success, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -157,14 +155,14 @@ public class MealDetailActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         if(!(dataSnapshot.exists())) {
-                            Toast.makeText(MealDetailActivity.this, "Not in your favourites", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MealDetailActivity.this, R.string.remove_from_favourites_exists, Toast.LENGTH_LONG).show();
                         } else {
 
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 ds.getRef().removeValue();
                             }
 
-                            Toast.makeText(MealDetailActivity.this, "Removed from your favourites", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MealDetailActivity.this, R.string.remove_from_favourites_success, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -173,22 +171,6 @@ public class MealDetailActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Toast.makeText(MealDetailActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
 
-                    }
-                });
-
-        databaseReference.child("name").setValue(null)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MealDetailActivity.this, "Removed from your favourites", Toast.LENGTH_LONG).show();
-
-                    }
-                })
-
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MealDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
