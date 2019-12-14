@@ -11,5 +11,9 @@
     <string name="add_meal_title">Meal Name:</string>
     <string name="take_picture">Take Picture</string>
     <string name="save_meal">Save Meal</string>
+    <string name="add_to_favourites_exists">Already in your favourites</string>
+    <string name="add_to_favourites_success">Added to your favourites</string>
+    <string name="remove_from_favourites_exists">Not in your favourites</string>
+    <string name="remove_from_favourites_success">Removed from your favourites</string>
 
 </resources>
