@@ -20,6 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+/*
+    This activity is in control of displaying all the meal information, specific to the selcted meal on the
+    Home screen
+*/
+
 public class MealDetailActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -87,6 +92,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
     }
 
+    //Sets up the view with the content passed in the intent from the Home screen.
     public void setUp() {
 
         Intent intent = getIntent();
@@ -106,6 +112,7 @@ public class MealDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    //Controls which database activity is taking place by selecting the favourite or delete button on the toolbar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -117,9 +124,9 @@ public class MealDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Controls the addition of meals to the database which is added to favourites.
     public void addToFavouites () {
         final String meal = meal_name.getText().toString().trim();
-//        final String image = meal_image.getImageMatrix().toString().trim();
 
         databaseReference.orderByChild("name").equalTo(meal)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -146,6 +153,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
     }
 
+    //Controls the deletion of meals from the database which removes from favourites.
     public void removeFromFavouites() {
         final String meal = meal_name.getText().toString().trim();
 
