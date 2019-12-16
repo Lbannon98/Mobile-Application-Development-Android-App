@@ -3,9 +3,11 @@ package com.example.mealplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -50,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("id");
         databaseReference.keepSynced(true);
@@ -140,6 +143,30 @@ public class MainActivity extends AppCompatActivity {
                 return new MainViewHolder(LayoutInflater.from(MainActivity.this).inflate(R.layout.main_item, parent, false));
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    //Controls the User log out functionality
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if((item.getItemId() == R.id.logout_icon)) {
+            Toast.makeText(MainActivity.this, "Logged out Successfully", Toast.LENGTH_LONG).show();
+
+            firebaseLogout();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void firebaseLogout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
     }
 
 }

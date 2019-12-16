@@ -126,6 +126,7 @@ public class MealDetailActivity extends AppCompatActivity {
 
     //Controls the addition of meals to the database which is added to favourites.
     public void addToFavouites () {
+
         final String meal = meal_name.getText().toString().trim();
 
         databaseReference.orderByChild("name").equalTo(meal)
