@@ -5,7 +5,6 @@
     <string name="add_to_favourites_exists">" Ya en tus favoritos"</string>
     <string name="add_to_favourites_success">Agregado a tus favoritos</string>
     <string name="link_description">Haga clic en el enlace de abajo para la receta!</string>
-    <string name="meal_added_failure">" ¡Toma una foto de la comida!"</string>
     <string name="meal_added_success">" Comida añadida con éxito"</string>
     <string name="nav_add">" Añadir"</string>
     <string name="nav_favourites">Favoritos</string>
@@ -18,5 +17,21 @@
     <string name="toolbar_add">" Agregar comidas"</string>
     <string name="toolbar_favourites">" Sus favoritos"</string>
     <string name="exception">Excepción:</string>
-    <string name="permission_denied">Permiso denegado</string>
+    <string name="create_account">" ¿No tienes una cuenta? ¡Regístrate ahora!"</string>
+    <string name="email_error">Correo electronico es requerido</string>
+    <string name="login">" Iniciar sesión"</string>
+    <string name="login_email">" Ingrese correo electrónico:"</string>
+    <string name="login_password">" Introducir la contraseña:"</string>
+    <string name="login_successful">" Iniciado sesión correctamente"</string>
+    <string name="login_to_account">" ¿Ya registrado? ¡Inicia sesión ahora!"</string>
+    <string name="password_error">se requiere contraseña</string>
+    <string name="password_length_error">" La contraseña debe ser mayor o igual a 6 caracteres"</string>
+    <string name="permission_denied">" Permiso denegado"</string>
+    <string name="register">" Registro"</string>
+    <string name="register_name">" Ingrese el nombre completo:"</string>
+    <string name="register_successful">" Registrado correctamente"</string>
+    <string name="logout_successful">" Salió exitosamente"</string>
+    <string name="meal_added_failure">¡Toma una foto de la comida!</string>
+
+
 </resources>

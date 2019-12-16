@@ -19,5 +19,18 @@
     <string name="meal_added_failure">Take picture of meal!</string>
     <string name="exception">Exception:</string>
     <string name="permission_denied">Permission denied</string>
+    <string name="login_email">Enter Email:</string>
+    <string name="login_password">Enter Password:</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="register_name">Enter Full Name:</string>
+    <string name="create_account">Not got an account? Register Now!</string>
+    <string name="login_to_account">Already registered? Login Now!</string>
+    <string name="email_error">Email is required</string>
+    <string name="password_error">Password is required</string>
+    <string name="password_length_error">Password be greater than or equal to 6 characters</string>
+    <string name="login_successful">Logged in Successfully</string>
+    <string name="logout_successful">Logged out Successfully</string>
+    <string name="register_successful">Registered Successfully</string>
 
 </resources>

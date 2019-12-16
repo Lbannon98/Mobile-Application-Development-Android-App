@@ -41,7 +41,7 @@ public class SplashScreen extends AppCompatActivity {
                     image.startAnimation(animation);
 
                     sleep(3000);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                     startActivity(intent);
                     finish();
 
