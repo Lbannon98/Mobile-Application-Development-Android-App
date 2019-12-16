@@ -30,6 +30,7 @@
     <string name="password_error">Password is required</string>
     <string name="password_length_error">Password be greater than or equal to 6 characters</string>
     <string name="login_successful">Logged in Successfully</string>
+    <string name="logout_successful">Logged out Successfully</string>
     <string name="register_successful">Registered Successfully</string>
 
 </resources>

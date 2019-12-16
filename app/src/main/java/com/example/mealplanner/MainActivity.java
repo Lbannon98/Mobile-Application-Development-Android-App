@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if((item.getItemId() == R.id.logout_icon)) {
-            Toast.makeText(MainActivity.this, "Logged out Successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.logout_successful, Toast.LENGTH_LONG).show();
 
             firebaseLogout();
         }
