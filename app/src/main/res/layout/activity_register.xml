@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
@@ -8,49 +9,63 @@
         android:id="@+id/register_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/register"
-        android:textSize="14pt"
         android:fontFamily="sans-serif-condensed-light"
-        android:textAlignment="center"/>
+        android:text="@string/register"
+        android:textAlignment="center"
+        android:textSize="14pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/register_logo"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="80dp"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_title" />
 
     <TextView
         android:id="@+id/login_to_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/login_to_account"
-        android:textSize="8pt"
         android:fontFamily="sans-serif-condensed-light"
-        android:textAlignment="center"/>
+        android:text="@string/login_to_account"
+        android:textAlignment="center"
+        android:textSize="8pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_logo" />
 
     <EditText
         android:id="@+id/register_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_to_account"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/register_name"
-        android:importantForAutofill="no"/>
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_to_account" />
 
 
     <EditText
@@ -58,27 +73,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/register_name"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:ems="10"
-        android:inputType="textEmailSubject"
         android:hint="@string/login_email"
-        android:importantForAutofill="no"/>
+        android:importantForAutofill="no"
+        android:inputType="textEmailSubject"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_name" />
 
     <EditText
         android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/register_email"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:ems="10"
-        android:inputType="textPassword"
         android:hint="@string/login_password"
         android:importantForAutofill="no"
-        android:maxLength="6"/>
+        android:inputType="textPassword"
+        android:maxLength="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_email" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerBtn"
@@ -86,11 +111,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/register_password"
-        android:fontFamily="sans-serif-condensed-light"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="sans-serif-condensed-light"
         android:text="@string/register"
-        app:backgroundTint="@color/colorPrimary"/>
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_password" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
